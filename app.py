@@ -1,16 +1,24 @@
 from flask import Flask, render_template, request, redirect
-import sqlite3
+import os
+import psycopg2
 
 app = Flask(__name__)
 
 
 def criar_banco():
-    conexao = sqlite3.connect("biblioteca.db")
+    conexao = psycopg2.connect(
+        host="localhost",
+        database="biblioteca",
+        user="postgres",
+        password=os.environ["DB_PASSWORD"],
+        port="5432"
+    )
+
     cursor = conexao.cursor()
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS livros (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             titulo TEXT NOT NULL,
             autor TEXT NOT NULL
         )
@@ -22,7 +30,14 @@ def criar_banco():
 
 @app.route("/")
 def inicio():
-    conexao = sqlite3.connect("biblioteca.db")
+    conexao = psycopg2.connect(
+        host="localhost",
+        database="biblioteca",
+        user="postgres",
+        password=os.environ["DB_PASSWORD"],
+        port="5432"
+    )
+
     cursor = conexao.cursor()
 
     cursor.execute("SELECT * FROM livros")
@@ -37,11 +52,18 @@ def cadastrar():
     titulo = request.form["titulo"]
     autor = request.form["autor"]
 
-    conexao = sqlite3.connect("biblioteca.db")
+    conexao = psycopg2.connect(
+        host="localhost",
+        database="biblioteca",
+        user="postgres",
+        password=os.environ["DB_PASSWORD"],
+        port="5432"
+    )
+
     cursor = conexao.cursor()
 
     cursor.execute(
-        "INSERT INTO livros (titulo, autor) VALUES (?, ?)",
+        "INSERT INTO livros (titulo, autor) VALUES (%s, %s)",
         (titulo, autor)
     )
 
