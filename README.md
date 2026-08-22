@@ -9,14 +9,15 @@ A primeira funcionalidade desenvolvida permite:
     Armazenar os livros em um banco de dados PostgreSQL.
     Listar os livros cadastrados na página inicial.
 
-Tecnologias utilizadas
+Tecnologias utilizadas:
   Python
   Flask
   HTML
   PostgreSQL
   psycopg2
 
-Estrutura
+Estrutura:
+
   O projeto utiliza três camadas:
     Front-end: HTML
     Back-end: Python com Flask
