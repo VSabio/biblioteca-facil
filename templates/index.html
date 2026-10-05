@@ -57,21 +57,25 @@
 
     <hr>
 
-    <h2>Livros cadastrados</h2>
+<h2>Livros cadastrados</h2>
 
-    {% if livros %}
+{% if livros %}
 
-        <ul>
-            {% for livro in livros %}
-                <li>{{ livro[1] }} - {{ livro[2] }}</li>
-            {% endfor %}
-        </ul>
+    {% for livro in livros %}
+        <li>
+            {{ livro[1] }} - {{ livro[2] }}
 
-    {% else %}
+            <form action="/excluir/{{ livro[0] }}" method="POST" style="display: inline;">
+                <button type="submit">Excluir</button>
+            </form>
+        </li>
+    {% endfor %}
 
-        <p>Nenhum livro cadastrado.</p>
+{% else %}
 
-    {% endif %}
+    <p>Nenhum livro cadastrado.</p>
+
+{% endif %}
 
 </body>
 

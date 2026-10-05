@@ -72,6 +72,27 @@ def cadastrar():
 
     return redirect("/")
 
+@app.route("/excluir/<int:id>", methods=["POST"])
+def excluir(id):
+    conexao = psycopg2.connect(
+        host="localhost",
+        database="biblioteca",
+        user="postgres",
+        password=os.environ["DB_PASSWORD"],
+        port="5432"
+    )
+
+    cursor = conexao.cursor()
+
+    cursor.execute(
+        "DELETE FROM livros WHERE id = %s",
+        (id,)
+    )
+
+    conexao.commit()
+    conexao.close()
+
+    return redirect("/")
 
 if __name__ == "__main__":
     criar_banco()
