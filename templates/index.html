@@ -59,6 +59,24 @@
 
 <h2>Livros cadastrados</h2>
 
+<form action="/" method="GET">
+    <label for="busca">Pesquisar livro:</label>
+    <br><br>
+
+    <input
+        type="text"
+        id="busca"
+        name="busca"
+        placeholder="Digite o título ou autor"
+        value="{{ busca }}"
+    >
+
+    <button type="submit">Buscar</button>
+    <a href="/">Limpar pesquisa</a>
+</form>
+
+<br>
+
 {% if livros %}
 
     {% for livro in livros %}
@@ -71,11 +89,15 @@
         </li>
     {% endfor %}
 
+
 {% else %}
-
-    <p>Nenhum livro cadastrado.</p>
-
+    {% if busca %}
+        <p>Nenhum livro encontrado para "{{ busca }}".</p>
+    {% else %}
+        <p>Nenhum livro cadastrado.</p>
+    {% endif %}
 {% endif %}
+
 
 </body>
 

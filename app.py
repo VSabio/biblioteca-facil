@@ -40,12 +40,33 @@ def inicio():
 
     cursor = conexao.cursor()
 
-    cursor.execute("SELECT * FROM livros")
+
+    cursor = conexao.cursor()
+
+    busca = request.args.get("busca", "").strip()
+
+    if busca:
+        cursor.execute(
+            """
+            SELECT * FROM livros
+            WHERE titulo ILIKE %s OR autor ILIKE %s
+            ORDER BY id ASC
+            """,
+            (f"%{busca}%", f"%{busca}%")
+        )
+    else:
+        cursor.execute("SELECT * FROM livros ORDER BY id ASC")
+
     livros = cursor.fetchall()
 
     conexao.close()
 
-    return render_template("index.html", livros=livros)
+    return render_template("index.html", livros=livros, busca=busca)
+
+
+    conexao.close()
+
+    return render_template("index.html", livros=livros, busca=busca)
 
 @app.route("/cadastrar", methods=["POST"])
 def cadastrar():
