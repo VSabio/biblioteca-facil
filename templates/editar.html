@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Livro - Biblioteca Fácil</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        input {
+            padding: 8px;
+            width: 250px;
+        }
+
+        button {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Biblioteca Fácil</h1>
+
+    <h2>Editar livro</h2>
+
+    <form action="/atualizar/{{ livro[0] }}" method="POST">
+
+        <label>Título:</label><br>
+        <input type="text" name="titulo"
+               value="{{ livro[1] }}" required>
+
+        <br><br>
+
+        <label>Autor:</label><br>
+        <input type="text" name="autor"
+               value="{{ livro[2] }}" required>
+
+        <br><br>
+
+        <button type="submit">Salvar alterações</button>
+
+        <a href="/">Cancelar</a>
+
+    </form>
+
+</body>
+</html>

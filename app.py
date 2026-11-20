@@ -115,6 +115,58 @@ def excluir(id):
 
     return redirect("/")
 
+@app.route("/editar/<int:id>")
+def editar(id):
+    conexao = psycopg2.connect(
+        host="localhost",
+        database="biblioteca",
+        user="postgres",
+        password=os.environ["DB_PASSWORD"],
+        port="5432"
+    )
+
+    cursor = conexao.cursor()
+
+    cursor.execute(
+        "SELECT * FROM livros WHERE id = %s",
+        (id,)
+    )
+
+    livro = cursor.fetchone()
+
+    conexao.close()
+
+    if livro is None:
+        return redirect("/")
+
+    return render_template("editar.html", livro=livro)
+
+
+@app.route("/atualizar/<int:id>", methods=["POST"])
+def atualizar(id):
+    titulo = request.form["titulo"]
+    autor = request.form["autor"]
+
+    conexao = psycopg2.connect(
+        host="localhost",
+        database="biblioteca",
+        user="postgres",
+        password=os.environ["DB_PASSWORD"],
+        port="5432"
+    )
+
+    cursor = conexao.cursor()
+
+    cursor.execute(
+        "UPDATE livros SET titulo = %s, autor = %s WHERE id = %s",
+        (titulo, autor, id)
+    )
+
+    conexao.commit()
+    conexao.close()
+
+    return redirect("/")
+    
 if __name__ == "__main__":
     criar_banco()
     app.run(debug=True)

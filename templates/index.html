@@ -82,6 +82,10 @@
     {% for livro in livros %}
         <li>
             {{ livro[1] }} - {{ livro[2] }}
+			
+			<a href="/editar/{{ livro[0] }}">
+				<button type="button">Editar</button>
+			</a>
 
             <form action="/excluir/{{ livro[0] }}" method="POST" style="display: inline;">
                 <button type="submit">Excluir</button>
